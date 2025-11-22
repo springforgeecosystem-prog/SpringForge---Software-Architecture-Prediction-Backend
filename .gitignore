@@ -2,8 +2,8 @@
 __pycache__/
 *.py[codz]
 *$py.class
-venv
-architecture_model
+venv/
+architecture_model/
 
 # C extensions
 *.so
