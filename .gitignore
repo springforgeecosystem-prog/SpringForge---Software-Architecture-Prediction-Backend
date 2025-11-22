@@ -2,8 +2,12 @@
 __pycache__/
 *.py[codz]
 *$py.class
+# Ignore everything inside __pycache__ and venv
+__pycache__/
 venv/
-architecture_model/
+
+# Ignore only .pkl files inside architecture_model
+architecture_model/*.pkl
 
 # C extensions
 *.so
