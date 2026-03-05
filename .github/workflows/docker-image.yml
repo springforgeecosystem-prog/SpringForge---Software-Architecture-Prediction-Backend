@@ -2,9 +2,8 @@ name: Docker CI/CD
 
 on:
   push:
-    branches: ["main"]
-  pull_request:
-    branches: [ "main" ]
+    branches: [main]
+  workflow_dispatch:
 
 concurrency:
   group: docker-build
@@ -28,12 +27,24 @@ jobs:
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
 
-    - name: Build Docker Image
+    - name: Build Docker image
       run: |
         docker build \
         -t ${{ secrets.ACR_LOGIN_SERVER }}/codegeneration-backend:latest \
         .
 
-    - name: Push Docker Image
+    - name: Push Docker image
       run: |
         docker push ${{ secrets.ACR_LOGIN_SERVER }}/codegeneration-backend:latest
+
+    - name: Deploy to VM
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VM_HOST }}
+        username: ${{ secrets.VM_USER }}
+        key: ${{ secrets.VM_SSH_KEY }}
+        script: |
+          cd ~/springforge-development
+          docker compose pull
+          docker compose up -d
+          docker image prune -f
