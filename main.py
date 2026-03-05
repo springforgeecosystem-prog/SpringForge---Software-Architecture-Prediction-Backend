@@ -89,7 +89,7 @@ def classify(payload: ArchitectureInput):
 @app.get("/")
 def root():
     return {
-        "service": "SpringForge Architecture Classifier API",
+        "service": "SpringForge Architecture Classifier API for Plugin",
         "status": "running and deployed(with docker pipeline)",
         "model_loaded": "best_model_RF_tuned.pkl",
         "features_expected": len(feature_list)
